@@ -1,0 +1,8 @@
+{
+  "blockTypes": ["paragraph", "paragraph", "paragraph"],
+  "blocks": [
+    { "type": "paragraph", "text": "Quick Start" },
+    { "type": "paragraph", "text": "This is a short article intro. Second line of copy." },
+    { "type": "paragraph", "text": "New section starts now." }
+  ]
+}
