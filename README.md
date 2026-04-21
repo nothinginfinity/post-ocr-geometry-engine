@@ -22,6 +22,7 @@ OCR provider output
 | **Phase 1** | ✅ Complete | Tesseract TSV normalizer, geometry schema, line/paragraph grouping, markdown emitter, pipeline function, tests |
 | **Phase 2** | ✅ Complete | PaddleOCR normalizer, heading detection, list detection, reading-order sort, updated pipeline + types |
 | **Phase 3** | ✅ Complete | Table inference (clustering), code block detection (symbol density), debug HTML overlay emitter, Markdown table rendering |
+| **Stabilization** | ✅ Complete | Fixture-based regression tests, `tests/helpers/loadFixture.ts`, 5 real-world fixture sets |
 | **Phase 4** | 🔜 Planned | InfinityPaste adapter, browser worker wrapper, confidence-based escalation hooks |
 
 ---
@@ -57,6 +58,28 @@ npm run dev:phase3
 ```
 
 Outputs `debug-phase3.html` — open in a browser to see color-coded bbox overlays for each detected block type.
+
+---
+
+## Regression Fixtures
+
+The repo includes fixture-based OCR regression tests under `fixtures/tesseract/`.
+
+These fixtures validate deterministic output for:
+
+- `article-basic` — basic article-like text with headings and paragraphs
+- `list-notes` — bullet list detection
+- `simple-table` — 2-column table inference
+- `code-screenshot` — code block detection from indented/symbol-dense lines
+- `mixed-page` — paragraph + list + table + code all on one page
+
+Each fixture has three files: `.tsv` (input), `.expected.md` (expected markdown), `.expected.json` (expected block types + content).
+
+Run all fixtures:
+
+```bash
+npm test
+```
 
 ---
 
@@ -160,8 +183,18 @@ examples/
   tesseract-tsv-basic.ts
   phase3-basic.ts
 tests/
+  helpers/
+    loadFixture.ts
   buildDocument.test.ts
   phase3.test.ts
+  fixtures.test.ts
+fixtures/
+  tesseract/
+    article-basic.tsv + .expected.md + .expected.json
+    code-screenshot.tsv + .expected.md + .expected.json
+    simple-table.tsv + .expected.md + .expected.json
+    list-notes.tsv + .expected.md + .expected.json
+    mixed-page.tsv + .expected.md + .expected.json
 ```
 
 ---
