@@ -1,43 +1,30 @@
 {
   "name": "post-ocr-geometry-engine",
-  "version": "0.1.0",
-  "description": "Deterministic post-OCR geometry reconstruction engine for markdown and structured JSON output.",
+  "version": "0.3.0",
+  "description": "Deterministic post-OCR document geometry reconstruction engine",
   "type": "module",
   "main": "./dist/index.js",
-  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     }
   },
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "clean": "rm -rf dist",
     "dev": "tsx ./examples/tesseract-tsv-basic.ts",
+    "dev:phase3": "tsx ./examples/phase3-basic.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "biome check .",
     "format": "biome format --write ."
   },
-  "keywords": [
-    "ocr",
-    "geometry",
-    "layout",
-    "markdown",
-    "tesseract",
-    "document-reconstruction"
-  ],
-  "author": "",
-  "license": "MIT",
   "devDependencies": {
-    "@biomejs/biome": "^1.9.0",
-    "tsx": "^4.21.0",
-    "typescript": "^5.6.0",
-    "vitest": "^4.1.4"
+    "@biomejs/biome": "^1.6.4",
+    "tsx": "^4.7.2",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
   }
 }
