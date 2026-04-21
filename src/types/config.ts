@@ -14,37 +14,17 @@ export interface ParagraphHeuristics {
   lineHeightSimilarityRatio: number;
 }
 
-export interface HeadingHeuristics {
-  minHeightRatioVsMedian: number;
-  maxWords: number;
-  minGapAbovePx: number;
-  minGapBelowPx: number;
-  preferTitleRegions: boolean;
-}
-
-export interface ListHeuristics {
-  leftEdgeTolerancePx: number;
-}
-
-export interface ReadingOrderOptions {
-  useRegionHints: boolean;
-  columnTolerancePx: number;
-}
-
 export interface BuildOptions {
   paragraph?: Partial<ParagraphHeuristics>;
-  headings?: Partial<HeadingHeuristics>;
-  lists?: Partial<ListHeuristics>;
-  readingOrder?: Partial<ReadingOrderOptions>;
-  detectHeadings?: boolean;
-  detectLists?: boolean;
-  sortReadingOrder?: boolean;
   preserveInputLines?: boolean;
+  enableTableInference?: boolean;
+  enableCodeInference?: boolean;
 }
 
 export interface BuildDebugInfo {
   warnings: string[];
   ambiguousBlocks: string[];
+  debugHtml?: string;
 }
 
 export interface BuildResult {
@@ -71,21 +51,4 @@ export const DEFAULT_PARAGRAPH_HEURISTICS: ParagraphHeuristics = {
   maxVerticalGapPx: 18,
   leftEdgeTolerancePx: 16,
   lineHeightSimilarityRatio: 0.35,
-};
-
-export const DEFAULT_HEADING_HEURISTICS: HeadingHeuristics = {
-  minHeightRatioVsMedian: 1.18,
-  maxWords: 12,
-  minGapAbovePx: 10,
-  minGapBelowPx: 10,
-  preferTitleRegions: true,
-};
-
-export const DEFAULT_LIST_HEURISTICS: ListHeuristics = {
-  leftEdgeTolerancePx: 18,
-};
-
-export const DEFAULT_READING_ORDER_OPTIONS: ReadingOrderOptions = {
-  useRegionHints: true,
-  columnTolerancePx: 80,
 };
