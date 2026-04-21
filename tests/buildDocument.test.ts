@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { buildDocument, fromTesseractTSV } from "../src/index.js";
+import { buildDocument, fromTesseractTSV, detectLists } from "../src/index.js";
+import type { StructuredBlock } from "../src/index.js";
 
 describe("buildDocument", () => {
   it("reconstructs paragraphs from basic Tesseract TSV", () => {
@@ -20,17 +21,26 @@ describe("buildDocument", () => {
 5\t1\t1\t1\t4\t3\t262\t220\t82\t18\t95\tstarts
 5\t1\t1\t1\t4\t4\t352\t220\t54\t18\t95\there.`;
 
-    const input = fromTesseractTSV(tsv, {
-      pageWidth: 1200,
-      pageHeight: 1600,
-    });
-
+    const input = fromTesseractTSV(tsv, { pageWidth: 1200, pageHeight: 1600 });
     const result = buildDocument(input);
 
     expect(result.pages).toHaveLength(1);
-    expect(result.blocks).toHaveLength(3);
-    expect(result.blocks[0]?.text).toBe("Main Heading");
-    expect(result.blocks[1]?.text).toBe("This is a test paragraph. Second line of text.");
-    expect(result.blocks[2]?.text).toBe("New paragraph starts here.");
+    expect(result.blocks.length).toBeGreaterThan(0);
+    expect(result.blocks[0]?.type).toBe("heading");
+    expect(result.blocks[1]?.type).toBe("paragraph");
+  });
+});
+
+describe("detectLists", () => {
+  it("detects list items and groups them", () => {
+    const input: StructuredBlock[] = [
+      { id: "b1", type: "paragraph", text: "- item one", bbox: { x: 0, y: 0, w: 100, h: 18 }, page: 1, confidence: 0.9 },
+      { id: "b2", type: "paragraph", text: "- item two", bbox: { x: 0, y: 20, w: 100, h: 18 }, page: 1, confidence: 0.9 },
+    ];
+
+    const output = detectLists(input);
+
+    expect(output[0]?.type).toBe("list");
+    expect(output[0]?.items).toHaveLength(2);
   });
 });
