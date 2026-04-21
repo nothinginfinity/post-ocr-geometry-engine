@@ -1,0 +1,7 @@
+level	page_num	block_num	par_num	line_num	word_num	left	top	width	height	conf	text
+5	1	1	1	1	1	72	64	60	18	95	const
+5	1	1	1	1	2	140	64	18	18	95	x
+5	1	1	1	1	3	166	64	14	18	95	=
+5	1	1	1	1	4	188	64	18	18	95	1;
+5	1	1	1	2	1	96	92	66	18	95	return
+5	1	1	1	2	2	170	92	20	18	95	x;

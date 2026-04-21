@@ -1,0 +1,9 @@
+{
+  "blockTypes": ["paragraph", "list", "table", "code"],
+  "blocks": [
+    { "type": "paragraph", "text": "Build Notes" },
+    { "type": "list" },
+    { "type": "table", "rows": [["Name", "Value"], ["Foo", "12"]] },
+    { "type": "code", "text": "const x = 1;\nreturn x;" }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "blockTypes": ["list"],
+  "blocks": [
+    { "type": "list" }
+  ]
+}

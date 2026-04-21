@@ -1,0 +1,13 @@
+{
+  "blockTypes": ["table"],
+  "blocks": [
+    {
+      "type": "table",
+      "rows": [
+        ["Name", "Value"],
+        ["Foo", "12"],
+        ["Bar", "18"]
+      ]
+    }
+  ]
+}

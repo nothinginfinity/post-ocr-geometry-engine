@@ -1,0 +1,6 @@
+{
+  "blockTypes": ["code"],
+  "blocks": [
+    { "type": "code", "text": "const x = 1;\nreturn x;" }
+  ]
+}
