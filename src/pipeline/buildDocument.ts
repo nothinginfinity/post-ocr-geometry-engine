@@ -15,6 +15,7 @@ import { detectLists } from "../reconstruct/lists.js";
 import { detectTables } from "../reconstruct/tables.js";
 import { detectCodeBlocks } from "../reconstruct/codeBlocks.js";
 import { applyReadingOrder } from "../order/readingOrder.js";
+import { computeMedianHeight, scoreBlocks } from "../score/index.js";
 
 export function buildDocument(
   input: NormalizedProviderInput,
@@ -85,21 +86,30 @@ export function buildDocument(
   }
 
   const orderedBlocks = applyReadingOrder(blocks);
-  const markdown = toMarkdown(orderedBlocks);
-  const text = orderedBlocks
+
+  // Score pass — global, after all blocks are emitted and ordered
+  const pageContext = { medianBodyHeight: computeMedianHeight(orderedBlocks) };
+  const scoredBlocks = scoreBlocks(orderedBlocks, pageContext);
+
+  const ambiguousBlocks = scoredBlocks
+    .filter((b) => b.ambiguity !== undefined)
+    .map((b) => b.id);
+
+  const markdown = toMarkdown(scoredBlocks);
+  const text = scoredBlocks
     .map((block) => block.text ?? "")
     .filter((value) => value.length > 0)
     .join("\n\n");
 
   return {
     pages,
-    blocks: orderedBlocks,
+    blocks: scoredBlocks,
     markdown,
     text,
     debug: {
       warnings,
-      ambiguousBlocks: [],
-      debugHtml: toDebugHtml(pages, orderedBlocks),
+      ambiguousBlocks,
+      debugHtml: toDebugHtml(pages, scoredBlocks),
     },
   };
 }
